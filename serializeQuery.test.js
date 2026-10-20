@@ -21,3 +21,12 @@ test('serializes array parameters with repeated keys', () => {
     'filter=first&filter=second'
   );
 });
+test('properly URL-encodes special characters in array values', () => {
+  assert.equal(
+    serializeQuery({ tags: ['web dev', 'node&express']}),
+    'tags=web%20dev&tags=node%26express'
+  );
+});
+test('handles empty arrays without appending stray keys', () => {
+  assert.equal(serializeQuery({ items: [], status: 'ready'}), 'status=ready');
+});
